@@ -1,0 +1,21 @@
+{
+  "name": "aura-shop",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Aura Shop: an online store for ventilation, heating, cooling and special devices (Next.js static export)",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "npx serve out",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@types/node": "^26.6.6",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "next": "^16.4.5",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "typescript": "^7.0.2"
+  }
+}
