@@ -14,6 +14,10 @@ npm run build    # static site in out/
 
 Set `NEXT_PUBLIC_SITE_URL` to the real domain before building so the sitemap, canonical links and structured data use it.
 
+## Deploy (GitHub Pages)
+
+`npm run build:docs` builds the site for `https://hamed-ab-2026.github.io/aura-shop/` and copies it into `docs/`. Commit `docs/`, then in the repository open Settings, Pages and choose branch `main`, folder `/docs`. Rebuild and commit `docs/` after every change.
+
 ## Edit
 
 - `data/store.ts`: store name, phone, categories.

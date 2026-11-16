@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "build:docs": "NEXT_PUBLIC_BASE_PATH=/aura-shop NEXT_PUBLIC_SITE_URL=https://hamed-ab-2026.github.io/aura-shop next build && rm -rf docs && cp -r out docs && touch docs/.nojekyll",
     "start": "npx serve out",
     "typecheck": "tsc --noEmit"
   },

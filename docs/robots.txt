@@ -1,0 +1,4 @@
+User-Agent: *
+Allow: /
+
+Sitemap: https://hamed-ab-2026.github.io/aura-shop/sitemap.xml

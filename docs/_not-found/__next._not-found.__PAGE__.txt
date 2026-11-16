@@ -1,0 +1,28 @@
+1:"$Sreact.fragment"
+2:"/aura-shop/_next/static/chunks/0-_lcleyhp0ff.js"
+3:I[70119,["$2"],"default"]
+4:I[39756,["$2"],"default"]
+5:I[37457,["$2"],"default"]
+6:I[22016,["$2"],""]
+d:I[97367,["$2"],"OutletBoundary"]
+e:"$Sreact.suspense"
+11:"ViewportBoundary"
+12:I[97367,["$2"],"$11"]
+13:"MetadataBoundary"
+14:I[97367,["$2"],"$13"]
+:HL["/aura-shop/_next/static/chunks/01waibd-p0b21.css","style"]
+8:X
+b:X
+b:C
+c:[["children",{"s":"__PAGE__","h":160,"d":{"r":["$","$1","c",{"children":[["$","div",null,{"className":"empty","children":[["$","h1",null,{"children":"صفحه پیدا نشد"}],["$","p",null,{"children":"آدرس اشتباه است یا صفحه حذف شده است."}],["$","$L6",null,{"className":"btn","href":"/","children":"بازگشت به فروشگاه"}]]}],null,["$","$Ld",null,{"children":["$","$e",null,{"name":"Next.MetadataOutlet","children":"$@f"}]}]]}],"p":"$@10","v":null,"s":"$8"}}]]
+9:[["children",{"s":"/_not-found","h":96,"d":{"r":["$","$1","c",{"children":[null,["$","$L4",null,{"parallelRouterKey":"children","template":["$","$L5",null,{}]}]]}],"p":"$@a","v":"$b","s":"$8"},"c":"$Qc"}]]
+0:{"t":{"t":{"s":"","h":80,"d":{"r":["$","$1","c",{"children":[[["$","link","0",{"rel":"stylesheet","href":"/aura-shop/_next/static/chunks/01waibd-p0b21.css","precedence":"next"}],["$","script","script-0",{"src":"/aura-shop/_next/static/chunks/0-_lcleyhp0ff.js","async":true}]],["$","html",null,{"lang":"fa","dir":"rtl","data-theme":"dark","className":"_1Kd8Sa_variable KhCA-a_variable","suppressHydrationWarning":true,"children":[["$","head",null,{"children":["$","script",null,{"dangerouslySetInnerHTML":{"__html":"(function(){var d=document.documentElement;try{d.dataset.theme=localStorage.getItem(\"aura-theme\")||\"dark\"}catch(e){d.dataset.theme=\"dark\"}})();"}}]}],["$","body",null,{"children":[["$","a",null,{"className":"skip-link","href":"#main","children":"پرش به محتوا"}],["$","$L3",null,{}],["$","main",null,{"id":"main","className":"content","children":["$","$L4",null,{"parallelRouterKey":"children","template":["$","$L5",null,{}],"notFound":[["$","div",null,{"className":"empty","children":[["$","h1",null,{"children":"صفحه پیدا نشد"}],["$","p",null,{"children":"آدرس اشتباه است یا صفحه حذف شده است."}],["$","$L6",null,{"className":"btn","href":"/","children":"بازگشت به فروشگاه"}]]}],[]]}]}],["$","footer",null,{"className":"site-footer","children":[["$","div",null,{"className":"footer-cols","children":[["$","div",null,{"children":[["$","strong",null,{"className":"footer-brand","children":"فروشگاه اورا"}],["$","p",null,{"children":"تهویه، سرمایش، گرمایش و دستگاه‌های خاص"}]]}],["$","div",null,{"children":[["$","h2",null,{"children":"دسته‌بندی‌ها"}],["$","ul",null,{"children":[["$","li","ventilation",{"children":["$","$L6",null,{"href":"/category/ventilation/","children":"تهویه"}]}],["$","li","heaters",{"children":["$","$L6",null,{"href":"/category/heaters/","children":"بخاری"}]}],["$","li","coolers",{"children":["$","$L6",null,{"href":"/category/coolers/","children":"کولر"}]}],["$","li","special",{"children":["$","$L6",null,{"href":"/category/special/","children":"دستگاه‌های خاص"}]}]]}]]}],["$","div",null,{"children":[["$","h2",null,{"children":"تماس برای خرید"}],["$","ul",null,{"children":[["$","li",null,{"children":["$","a",null,{"href":"tel:+989336341491","dir":"ltr","children":"۰۹۳۳ ۶۳۴ ۱۴۹۱"}]}],["$","li",null,{"children":["$","a",null,{"href":"https://wa.me/989336341491?text=%D8%B3%D9%84%D8%A7%D9%85%D8%8C%20%D9%85%DB%8C%E2%80%8C%D8%AE%D9%88%D8%A7%D9%87%D9%85%20%D8%AF%D8%B1%D8%A8%D8%A7%D8%B1%D9%87%E2%80%8C%DB%8C%20%D9%85%D8%AD%D8%B5%D9%88%D9%84%D8%A7%D8%AA%20%D8%A7%D8%B7%D9%84%D8%A7%D8%B9%D8%A7%D8%AA%20%D8%A8%DA%AF%DB%8C%D8%B1%D9%85.","target":"_blank","rel":"noopener noreferrer","children":"واتساپ"}]}]]}]]}]]}],["$","p",null,{"className":"footer-note","children":["© ","۲۰۲۶"," ","فروشگاه اورا"]}]]}]]}]]}]]}],"p":"$@7","v":null,"s":"$8"},"c":"$Q9"},"h":{"r":["$","$1","h",{"children":[["$","meta",null,{"name":"robots","content":"noindex"}],["$","$L12",null,{"children":[["$","meta","0",{"charSet":"utf-8"}],["$","meta","1",{"name":"viewport","content":"width=device-width, initial-scale=1"}],["$","meta","2",{"name":"theme-color","content":"#0b0b12"}],["$","meta","3",{"name":"color-scheme","content":"dark light"}]]}],["$","$L14",null,{"children":[["$","div",null,{"hidden":true,"children":["$","$e",null,{"name":"Next.Metadata","children":[["$","title","0",{"children":"فروشگاه اورا | تهویه، سرمایش، گرمایش و دستگاه‌های خاص"}],["$","meta","1",{"name":"description","content":"فروشگاه اورا؛ دستگاه‌های تهویه، بخاری، کولر و تجهیزات خاص برای خانه، سالن و کسب‌وکار. مشاهده‌ی محصول و تماس مستقیم برای خرید."}],["$","meta","2",{"property":"og:title","content":"فروشگاه اورا | تهویه، سرمایش، گرمایش و دستگاه‌های خاص"}],["$","meta","3",{"property":"og:description","content":"فروشگاه اورا؛ دستگاه‌های تهویه، بخاری، کولر و تجهیزات خاص برای خانه، سالن و کسب‌وکار. مشاهده‌ی محصول و تماس مستقیم برای خرید."}],["$","meta","4",{"property":"og:site_name","content":"فروشگاه اورا"}],["$","meta","5",{"property":"og:locale","content":"fa_IR"}],["$","meta","6",{"property":"og:type","content":"website"}],["$","meta","7",{"name":"twitter:card","content":"summary"}],["$","meta","8",{"name":"twitter:title","content":"فروشگاه اورا | تهویه، سرمایش، گرمایش و دستگاه‌های خاص"}],["$","meta","9",{"name":"twitter:description","content":"فروشگاه اورا؛ دستگاه‌های تهویه، بخاری، کولر و تجهیزات خاص برای خانه، سالن و کسب‌وکار. مشاهده‌ی محصول و تماس مستقیم برای خرید."}]]}]}],null]}],["$","meta",null,{"name":"next-size-adjust","content":""}]]}],"p":"$@15","v":null,"s":"$8"}},"a":"$@16","u":"$@17","b":"Qn-9gac3dFNkoYfl4cmul"}
+f:null
+8:300
+17:true
+8:C
+16:0
+a:"$undefined"
+7:"$undefined"
+15:"$undefined"
+10:"$undefined"

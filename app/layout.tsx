@@ -1,4 +1,5 @@
 import type {Metadata, Viewport} from "next";
+import localFont from "next/font/local";
 import type {ReactNode} from "react";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
@@ -14,13 +15,15 @@ export const metadata: Metadata = {
 
 export const viewport: Viewport = {themeColor: "#0b0b12", colorScheme: "dark light"};
 
+const fontArabic = localFont({src: "./fonts/vazirmatn-arabic-wght-normal.woff2", weight: "100 900", variable: "--font-ar", display: "swap"});
+const fontLatin = localFont({src: "./fonts/vazirmatn-latin-wght-normal.woff2", weight: "100 900", variable: "--font-lat", display: "swap"});
+
 const BOOT = '(function(){var d=document.documentElement;try{d.dataset.theme=localStorage.getItem("aura-theme")||"dark"}catch(e){d.dataset.theme="dark"}})();';
 
 export default function RootLayout({children}: {children: ReactNode}) {
     return (
-        <html lang="fa" dir="rtl" data-theme="dark" suppressHydrationWarning>
+        <html lang="fa" dir="rtl" data-theme="dark" className={`${fontArabic.variable} ${fontLatin.variable}`} suppressHydrationWarning>
         <head>
-            <link rel="preload" href="/fonts/vazirmatn-arabic-wght-normal.woff2" as="font" type="font/woff2" crossOrigin=""/>
             <script dangerouslySetInnerHTML={{__html: BOOT}}/>
         </head>
         <body>
