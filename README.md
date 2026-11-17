@@ -1,8 +1,8 @@
 # Aura Shop
 
-An online store for ventilation, heating, cooling and special devices. Persian (RTL), dark glass theme with a light option, built with Next.js 16 as a static export.
+An online store built around one product, the Aura Vent keratin ventilation device. Persian (RTL), dark glass theme with a light option, built with Next.js 16 as a static export.
 
-The store has no cart or payments: each product page shows photos, video and a call / WhatsApp button for ordering.
+The landing page opens with the product's Aparat video filling the first screen, followed by an intro, features, photos and an order section. There is no cart or payments: ordering is by phone or WhatsApp.
 
 ## Run
 
@@ -20,5 +20,5 @@ Set `NEXT_PUBLIC_SITE_URL` to the real domain before building so the sitemap, ca
 
 ## Edit
 
-- `data/store.ts`: store name, phone, categories.
-- `data/products.ts`: products. Add an object and put its images in `public/images/products/<slug>/`.
+- `data/store.ts`: store name, phone, landing page sections.
+- `data/products.ts`: the product (name, intro text, features, Aparat video hash, images). Its images live in `public/images/products/<slug>/`. The landing page shows the first product in the list.

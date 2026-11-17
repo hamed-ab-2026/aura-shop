@@ -1,5 +1,5 @@
-:HL["/aura-shop/_next/static/chunks/01waibd-p0b21.css","style"]
+:HL["/aura-shop/_next/static/chunks/1e79eozhy1k1p.css","style"]
 :HL["/aura-shop/_next/static/media/vazirmatn_arabic_wght_normal-s.p.0tzxgo2fuaf-x.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
 :HL["/aura-shop/_next/static/media/vazirmatn_latin_wght_normal-s.p.00gnhmt88g2y1.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
 1:[["children",{"s":"__PAGE__","h":160}]]
-0:{"b":"Qn-9gac3dFNkoYfl4cmul","t":{"t":{"s":"","h":80,"c":"$Q1"}}}
+0:{"b":"5t0RqQOoa7ixEjGM9JfJF","t":{"t":{"s":"","h":80,"c":"$Q1"}}}

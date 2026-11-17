@@ -1,52 +1,80 @@
-import Link from "next/link";
 import JsonLd from "@/components/JsonLd";
-import {CATEGORY_ICONS, PhoneIcon} from "@/components/Icons";
-import ProductCard from "@/components/ProductCard";
-import {PRODUCTS, productsIn} from "@/data/products";
-import {CATEGORIES, STORE} from "@/data/store";
-import {telLink} from "@/lib/contact";
+import {ChatIcon, FEATURE_ICONS, PhoneIcon} from "@/components/Icons";
+import ProductDetails from "@/components/ProductDetails";
+import VideoHero from "@/components/VideoHero";
+import {FEATURED as product} from "@/data/products";
+import {STORE} from "@/data/store";
+import {askAbout, telLink, waLink} from "@/lib/contact";
+
+const fa = (n: number) => n.toLocaleString("fa-IR", {minimumIntegerDigits: 2});
 
 export default function HomePage() {
+    const url = `${STORE.siteUrl}/products/${product.slug}/`;
     return (
         <>
             <JsonLd data={{"@context": "https://schema.org", "@type": "Store", name: STORE.nameFa, alternateName: STORE.name, url: STORE.siteUrl, telephone: STORE.phone, description: STORE.description}}/>
-            <section className="hero">
-                <span className="badge">{STORE.name}</span>
-                <h1>{STORE.tagline}</h1>
-                <p>{STORE.description}</p>
-                <div className="btn-row">
-                    <Link className="btn btn--lg" href="/products/">مشاهده‌ی محصولات</Link>
-                    <a className="btn btn--lg btn--ghost" href={telLink}><PhoneIcon/>تماس برای خرید</a>
+            <JsonLd data={{
+                "@context": "https://schema.org", "@type": "Product", name: product.name, description: product.description, url,
+                image: product.images.map((i) => `${STORE.siteUrl}${i.src}`), brand: {"@type": "Brand", name: "Aura"},
+            }}/>
+
+            {product.aparat && (
+                <VideoHero hash={product.aparat} title={product.name} eyebrow={STORE.nameFa} lead={STORE.tagline} poster={product.images[0].src} phoneHref={telLink}/>
+            )}
+
+            <section id="about" className="section">
+                <div className="wrap intro">
+                    <div data-reveal>
+                        <p className="eyebrow">معرفی دستگاه</p>
+                        <p className="intro-model" dir="ltr">{product.model}</p>
+                    </div>
+                    <p className="intro-text" data-words>
+                        {product.intro.split(" ").map((w, i) => <span className="w" key={i}>{w} </span>)}
+                    </p>
                 </div>
             </section>
 
-            <section aria-labelledby="cats-title">
-                <div className="block-head"><h2 id="cats-title">دسته‌بندی‌ها</h2><p>هر دسته به‌تدریج محصولات بیشتری می‌گیرد.</p></div>
-                <div className="grid grid--cats">
-                    {CATEGORIES.map((c) => {
-                        const Icon = CATEGORY_ICONS[c.icon];
-                        const count = productsIn(c.slug).length;
-                        return (
-                            <Link className="cat-card" href={`/category/${c.slug}/`} key={c.slug}>
-                                <span className="cat-icon"><Icon/></span>
-                                <h3>{c.name}</h3>
-                                <p>{c.description}</p>
-                                <span className="cat-count">{count > 0 ? `${count.toLocaleString("fa-IR")} محصول` : "به‌زودی"}</span>
-                            </Link>
-                        );
-                    })}
+            <section id="features" className="section section--paper" aria-labelledby="features-title">
+                <div className="wrap">
+                    <div className="section-head" data-reveal>
+                        <p className="eyebrow">ویژگی‌ها</p>
+                        <h2 id="features-title">ساخته‌شده برای کار هر روز سالن</h2>
+                    </div>
+                    <ul className="features">
+                        {product.features.map((f, i) => {
+                            const Icon = FEATURE_ICONS[f.icon];
+                            return (
+                                <li className="feature" key={f.title} data-reveal style={{"--i": i} as React.CSSProperties}>
+                                    <span className="feature-num">{fa(i + 1)}</span>
+                                    <span className="feature-icon"><Icon/></span>
+                                    <h3>{f.title}</h3>
+                                    <p>{f.text}</p>
+                                </li>
+                            );
+                        })}
+                    </ul>
                 </div>
             </section>
 
-            <section aria-labelledby="featured-title">
-                <div className="block-head"><h2 id="featured-title">محصولات</h2><Link href="/products/" className="link-more">همه‌ی محصولات</Link></div>
-                <div className="grid grid--products">{PRODUCTS.map((p) => <ProductCard key={p.slug} product={p}/>)}</div>
+            <section id="product" className="section" aria-label="تصاویر و مشخصات">
+                <div className="wrap">
+                    <ProductDetails product={product}/>
+                </div>
             </section>
 
-            <section className="cta">
-                <h2>دنبال دستگاه خاصی هستید؟</h2>
-                <p>بخاری، کولر و دستگاه‌های سفارشی؛ نیازتان را بگویید تا برایتان بسازیم یا تهیه کنیم.</p>
-                <a className="btn btn--lg" href={telLink}><PhoneIcon/><span dir="ltr">{STORE.phoneDisplay}</span></a>
+            <section id="order" className="section section--tight" aria-labelledby="order-title">
+                <div className="wrap">
+                    <div className="order" data-reveal>
+                        <p className="eyebrow eyebrow--light">قیمت و سفارش</p>
+                        <h2 id="order-title">برای قیمت، موجودی و سفارش تماس بگیرید</h2>
+                        <p>مشاوره پیش از خرید و پاسخ به سؤال‌های شما درباره‌ی {product.model}، تلفنی یا در واتساپ.</p>
+                        <a className="order-phone" href={telLink} dir="ltr">{STORE.phoneDisplay}</a>
+                        <div className="btn-row">
+                            <a className="btn btn--lg btn--light" href={telLink}><PhoneIcon/>تماس برای خرید</a>
+                            <a className="btn btn--lg btn--wa" href={waLink(askAbout(product.name))} target="_blank" rel="noopener noreferrer"><ChatIcon/>واتساپ</a>
+                        </div>
+                    </div>
+                </div>
             </section>
         </>
     );

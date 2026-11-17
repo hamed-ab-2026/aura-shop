@@ -1,16 +1,13 @@
 import type {MetadataRoute} from "next";
 import {PRODUCTS} from "@/data/products";
-import {CATEGORIES, STORE} from "@/data/store";
+import {STORE} from "@/data/store";
 
 export const dynamic = "force-static";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-    const now = new Date();
-    const url = (path: string, priority: number) => ({url: `${STORE.siteUrl}${path}`, lastModified: now, priority});
+    const latest = PRODUCTS.map((p) => p.date).sort().at(-1);
     return [
-        url("/", 1),
-        url("/products/", 0.9),
-        ...CATEGORIES.map((c) => url(`/category/${c.slug}/`, 0.7)),
-        ...PRODUCTS.map((p) => url(`/products/${p.slug}/`, 0.8)),
+        {url: `${STORE.siteUrl}/`, lastModified: latest, priority: 1},
+        ...PRODUCTS.map((p) => ({url: `${STORE.siteUrl}/products/${p.slug}/`, lastModified: p.date, priority: 0.8})),
     ];
 }
