@@ -1,7 +1,7 @@
 /* A procedural 3D model of the Aura Vent (black cabinet with a blue filter stripe and vents, a corrugated hose and an LED
    ring at the nozzle) and the 7-second intro animation used by the loading screen. Loaded on demand with three.js. */
 
-import * as THREE from "three";
+import {ACESFilmicToneMapping, AdditiveBlending, BoxGeometry, BufferAttribute, BufferGeometry, CanvasTexture, CatmullRomCurve3, CircleGeometry, CylinderGeometry, DirectionalLight, Group, HemisphereLight, Mesh, MeshBasicMaterial, MeshStandardMaterial, PerspectiveCamera, PlaneGeometry, PointLight, Points, PointsMaterial, Scene, Sprite, SpriteMaterial, SRGBColorSpace, TorusGeometry, TubeGeometry, Vector3, WebGLRenderer} from "three";
 
 export interface DeviceScene {
     /** Draws the frame for time t (seconds since the intro started). */
@@ -24,8 +24,8 @@ function labelTexture() {
     g.fillStyle = "#f4f5ff"; g.fillRect(0, 0, 512, 128);
     g.fillStyle = "#2f3fe0"; g.font = "800 74px system-ui, sans-serif"; g.textAlign = "center"; g.textBaseline = "middle";
     g.fillText("AURA VENT", 256, 68);
-    const t = new THREE.CanvasTexture(c);
-    t.colorSpace = THREE.SRGBColorSpace;
+    const t = new CanvasTexture(c);
+    t.colorSpace = SRGBColorSpace;
     t.anisotropy = 4;
     return t;
 }
@@ -38,79 +38,79 @@ function radialTexture(inner: string, outer: string) {
     const grd = g.createRadialGradient(64, 64, 0, 64, 64, 64);
     grd.addColorStop(0, inner); grd.addColorStop(1, outer);
     g.fillStyle = grd; g.fillRect(0, 0, 128, 128);
-    const t = new THREE.CanvasTexture(c);
-    t.colorSpace = THREE.SRGBColorSpace;
+    const t = new CanvasTexture(c);
+    t.colorSpace = SRGBColorSpace;
     return t;
 }
 
 function buildDevice() {
-    const device = new THREE.Group();
-    const body = new THREE.MeshStandardMaterial({color: 0x15161a, roughness: 0.38, metalness: 0.55});
-    const dark = new THREE.MeshStandardMaterial({color: 0x050506, roughness: 0.9});
-    const blue = new THREE.MeshStandardMaterial({color: BLUE, roughness: 0.3, metalness: 0.2, emissive: BLUE, emissiveIntensity: 0.25});
-    const steel = new THREE.MeshStandardMaterial({color: 0xb8bcc8, roughness: 0.25, metalness: 0.9});
+    const device = new Group();
+    const body = new MeshStandardMaterial({color: 0x15161a, roughness: 0.38, metalness: 0.55});
+    const dark = new MeshStandardMaterial({color: 0x050506, roughness: 0.9});
+    const blue = new MeshStandardMaterial({color: BLUE, roughness: 0.3, metalness: 0.2, emissive: BLUE, emissiveIntensity: 0.25});
+    const steel = new MeshStandardMaterial({color: 0xb8bcc8, roughness: 0.25, metalness: 0.9});
 
     // Cabinet with a slight bevel look from a thin dark top plate.
     const W = 1.05, H = 1.2, D = 1.05, FEET = 0.1;
-    const cabinet = new THREE.Mesh(new THREE.BoxGeometry(W, H, D), body);
+    const cabinet = new Mesh(new BoxGeometry(W, H, D), body);
     cabinet.position.y = FEET + H / 2;
     device.add(cabinet);
-    const top = new THREE.Mesh(new THREE.BoxGeometry(W * 1.01, 0.03, D * 1.01), dark);
+    const top = new Mesh(new BoxGeometry(W * 1.01, 0.03, D * 1.01), dark);
     top.position.y = FEET + H;
     device.add(top);
 
     // Adjustable feet.
-    const footGeo = new THREE.CylinderGeometry(0.07, 0.09, FEET, 20);
+    const footGeo = new CylinderGeometry(0.07, 0.09, FEET, 20);
     for (const [x, z] of [[-1, -1], [1, -1], [-1, 1], [1, 1]]) {
-        const f = new THREE.Mesh(footGeo, dark);
+        const f = new Mesh(footGeo, dark);
         f.position.set(x * (W / 2 - 0.12), FEET / 2, z * (D / 2 - 0.12));
         device.add(f);
     }
 
     // Front: blue filter stripe, vent slots and screws. Side: AURA VENT label.
     const front = D / 2 + 0.004;
-    const stripe = new THREE.Mesh(new THREE.BoxGeometry(W * 0.84, 0.1, 0.01), blue);
+    const stripe = new Mesh(new BoxGeometry(W * 0.84, 0.1, 0.01), blue);
     stripe.position.set(0, FEET + H * 0.47, front);
     device.add(stripe);
-    const slotGeo = new THREE.BoxGeometry(0.13, 0.045, 0.012);
+    const slotGeo = new BoxGeometry(0.13, 0.045, 0.012);
     for (let r = 0; r < 4; r++) {
         for (let c = 0; c < 5; c++) {
-            const s = new THREE.Mesh(slotGeo, dark);
+            const s = new Mesh(slotGeo, dark);
             s.position.set(-0.36 + c * 0.18, FEET + 0.12 + r * 0.085, front);
             device.add(s);
         }
     }
-    const screwGeo = new THREE.CylinderGeometry(0.018, 0.018, 0.012, 12);
+    const screwGeo = new CylinderGeometry(0.018, 0.018, 0.012, 12);
     screwGeo.rotateX(Math.PI / 2);
     for (const [x, y] of [[-1, 1], [1, 1], [-1, -1], [1, -1]]) {
-        const s = new THREE.Mesh(screwGeo, steel);
+        const s = new Mesh(screwGeo, steel);
         s.position.set(x * (W / 2 - 0.05), FEET + H / 2 + y * (H / 2 - 0.05), front + 0.002);
         device.add(s);
     }
-    const label = new THREE.Mesh(new THREE.PlaneGeometry(0.42, 0.105), new THREE.MeshStandardMaterial({map: labelTexture(), roughness: 0.5}));
+    const label = new Mesh(new PlaneGeometry(0.42, 0.105), new MeshStandardMaterial({map: labelTexture(), roughness: 0.5}));
     label.rotation.y = -Math.PI / 2;
     label.position.set(-W / 2 - 0.004, FEET + H * 0.72, D / 2 - 0.26);
     device.add(label);
 
     // Corrugated hose: a core tube with ridges along a bending curve.
     const y0 = FEET + H;
-    const curve = new THREE.CatmullRomCurve3([
-        new THREE.Vector3(0, y0, 0),
-        new THREE.Vector3(0, y0 + 0.7, 0),
-        new THREE.Vector3(0.05, y0 + 1.45, 0.02),
-        new THREE.Vector3(-0.15, y0 + 2.0, 0.05),
-        new THREE.Vector3(-0.6, y0 + 2.2, 0.1),
-        new THREE.Vector3(-0.92, y0 + 1.98, 0.14),
+    const curve = new CatmullRomCurve3([
+        new Vector3(0, y0, 0),
+        new Vector3(0, y0 + 0.7, 0),
+        new Vector3(0.05, y0 + 1.45, 0.02),
+        new Vector3(-0.15, y0 + 2.0, 0.05),
+        new Vector3(-0.6, y0 + 2.2, 0.1),
+        new Vector3(-0.92, y0 + 1.98, 0.14),
     ]);
     const HOSE_R = 0.17;
-    device.add(new THREE.Mesh(new THREE.TubeGeometry(curve, 160, HOSE_R * 0.92, 24), dark));
-    const ridgeGeo = new THREE.TorusGeometry(HOSE_R, 0.024, 8, 28);
-    const ridgeMat = new THREE.MeshStandardMaterial({color: 0x101114, roughness: 0.35, metalness: 0.4});
+    device.add(new Mesh(new TubeGeometry(curve, 160, HOSE_R * 0.92, 24), dark));
+    const ridgeGeo = new TorusGeometry(HOSE_R, 0.024, 8, 28);
+    const ridgeMat = new MeshStandardMaterial({color: 0x101114, roughness: 0.35, metalness: 0.4});
     const RIDGES = 58;
-    const up = new THREE.Vector3(0, 0, 1);
+    const up = new Vector3(0, 0, 1);
     for (let i = 1; i < RIDGES; i++) {
         const u = i / RIDGES;
-        const ring = new THREE.Mesh(ridgeGeo, ridgeMat);
+        const ring = new Mesh(ridgeGeo, ridgeMat);
         ring.position.copy(curve.getPointAt(u));
         ring.quaternion.setFromUnitVectors(up, curve.getTangentAt(u));
         device.add(ring);
@@ -119,18 +119,18 @@ function buildDevice() {
     // Nozzle with the LED ring, facing along the end of the hose.
     const end = curve.getPointAt(1);
     const dir = curve.getTangentAt(1);
-    const nozzle = new THREE.Group();
+    const nozzle = new Group();
     nozzle.position.copy(end);
     nozzle.quaternion.setFromUnitVectors(up, dir);
-    const collar = new THREE.Mesh(new THREE.CylinderGeometry(0.235, 0.21, 0.2, 32, 1, true), steel);
+    const collar = new Mesh(new CylinderGeometry(0.235, 0.21, 0.2, 32, 1, true), steel);
     collar.rotation.x = Math.PI / 2;
     collar.position.z = 0.07;
     nozzle.add(collar);
-    const mouth = new THREE.Mesh(new THREE.CircleGeometry(0.2, 32), dark);
+    const mouth = new Mesh(new CircleGeometry(0.2, 32), dark);
     mouth.position.z = 0.05;
     nozzle.add(mouth);
-    const ledMat = new THREE.MeshStandardMaterial({color: 0x333744, emissive: 0xe9edff, emissiveIntensity: 0, roughness: 0.2});
-    const led = new THREE.Mesh(new THREE.TorusGeometry(0.235, 0.04, 16, 48), ledMat);
+    const ledMat = new MeshStandardMaterial({color: 0x333744, emissive: 0xe9edff, emissiveIntensity: 0, roughness: 0.2});
+    const led = new Mesh(new TorusGeometry(0.235, 0.04, 16, 48), ledMat);
     led.position.z = 0.17;
     nozzle.add(led);
     device.add(nozzle);
@@ -139,42 +139,42 @@ function buildDevice() {
 }
 
 export function createDeviceScene(canvas: HTMLCanvasElement): DeviceScene {
-    const renderer = new THREE.WebGLRenderer({canvas, antialias: true, alpha: true, powerPreference: "high-performance"});
+    const renderer = new WebGLRenderer({canvas, antialias: true, alpha: true, powerPreference: "high-performance"});
     renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
-    renderer.outputColorSpace = THREE.SRGBColorSpace;
-    renderer.toneMapping = THREE.ACESFilmicToneMapping;
+    renderer.outputColorSpace = SRGBColorSpace;
+    renderer.toneMapping = ACESFilmicToneMapping;
 
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(30, 1, 0.1, 50);
+    const scene = new Scene();
+    const camera = new PerspectiveCamera(30, 1, 0.1, 50);
 
-    scene.add(new THREE.HemisphereLight(0xc9d0ff, 0x08080c, 0.9));
-    const key = new THREE.DirectionalLight(0xffffff, 2.4);
+    scene.add(new HemisphereLight(0xc9d0ff, 0x08080c, 0.9));
+    const key = new DirectionalLight(0xffffff, 2.4);
     key.position.set(3, 5, 4);
     scene.add(key);
-    const rim = new THREE.DirectionalLight(BLUE, 3.2);
+    const rim = new DirectionalLight(BLUE, 3.2);
     rim.position.set(-4, 2.5, -3);
     scene.add(rim);
-    const fill = new THREE.PointLight(0x7d89ff, 6, 6);
+    const fill = new PointLight(0x7d89ff, 6, 6);
     fill.position.set(2, 1, 2.5);
     scene.add(fill);
 
     const {device, ledMat, nozzle} = buildDevice();
-    const stage = new THREE.Group();
+    const stage = new Group();
     stage.add(device);
     device.position.set(0.25, 0, 0);
     scene.add(stage);
 
     // Floor shadow and LED glow (additive sprites instead of a post-processing pass).
-    const shadow = new THREE.Mesh(new THREE.PlaneGeometry(2.6, 2.6), new THREE.MeshBasicMaterial({map: radialTexture("rgba(0,0,0,0.75)", "rgba(0,0,0,0)"), transparent: true, depthWrite: false}));
+    const shadow = new Mesh(new PlaneGeometry(2.6, 2.6), new MeshBasicMaterial({map: radialTexture("rgba(0,0,0,0.75)", "rgba(0,0,0,0)"), transparent: true, depthWrite: false}));
     shadow.rotation.x = -Math.PI / 2;
     shadow.position.y = 0.002;
     scene.add(shadow);
     const glowTex = radialTexture("rgba(200,210,255,1)", "rgba(47,63,224,0)");
-    const glow = new THREE.Sprite(new THREE.SpriteMaterial({map: glowTex, transparent: true, opacity: 0, blending: THREE.AdditiveBlending, depthWrite: false}));
+    const glow = new Sprite(new SpriteMaterial({map: glowTex, transparent: true, opacity: 0, blending: AdditiveBlending, depthWrite: false}));
     glow.scale.setScalar(1.6);
     nozzle.add(glow);
     glow.position.z = 0.25;
-    const ledLight = new THREE.PointLight(0xdfe4ff, 0, 3);
+    const ledLight = new PointLight(0xdfe4ff, 0, 3);
     ledLight.position.z = 0.3;
     nozzle.add(ledLight);
 
@@ -182,12 +182,12 @@ export function createDeviceScene(canvas: HTMLCanvasElement): DeviceScene {
     const N = 140;
     const pos = new Float32Array(N * 3);
     const seeds = Array.from({length: N}, () => ({a: Math.random() * Math.PI * 2, r: 0.6 + Math.random() * 1.4, h: Math.random(), s: 0.5 + Math.random()}));
-    const pGeo = new THREE.BufferGeometry();
-    pGeo.setAttribute("position", new THREE.BufferAttribute(pos, 3));
-    const pMat = new THREE.PointsMaterial({size: 0.09, map: radialTexture("rgba(220,226,255,0.9)", "rgba(125,137,255,0)"), transparent: true, opacity: 0, blending: THREE.AdditiveBlending, depthWrite: false});
-    const particles = new THREE.Points(pGeo, pMat);
+    const pGeo = new BufferGeometry();
+    pGeo.setAttribute("position", new BufferAttribute(pos, 3));
+    const pMat = new PointsMaterial({size: 0.09, map: radialTexture("rgba(220,226,255,0.9)", "rgba(125,137,255,0)"), transparent: true, opacity: 0, blending: AdditiveBlending, depthWrite: false});
+    const particles = new Points(pGeo, pMat);
     scene.add(particles);
-    const target = new THREE.Vector3();
+    const target = new Vector3();
 
     const resize = () => {
         const w = canvas.clientWidth, h = canvas.clientHeight;
@@ -210,7 +210,7 @@ export function createDeviceScene(canvas: HTMLCanvasElement): DeviceScene {
         // LED powers on with a short flicker.
         const on = smooth(1.8, 2.6, t) * (t < 2.6 ? 0.55 + 0.45 * Math.sin(t * 70) : 1);
         ledMat.emissiveIntensity = on * 3;
-        (glow.material as THREE.SpriteMaterial).opacity = on * 0.9;
+        (glow.material as SpriteMaterial).opacity = on * 0.9;
         ledLight.intensity = on * 5;
 
         // Vapour: rises around the device, then spirals into the nozzle.
@@ -234,13 +234,17 @@ export function createDeviceScene(canvas: HTMLCanvasElement): DeviceScene {
 
     const dispose = () => {
         scene.traverse((o) => {
-            const m = o as THREE.Mesh;
+            const m = o as Mesh;
             m.geometry?.dispose();
             const mats = Array.isArray(m.material) ? m.material : m.material ? [m.material] : [];
-            mats.forEach((mat) => { (mat as THREE.MeshStandardMaterial).map?.dispose(); mat.dispose(); });
+            mats.forEach((mat) => { (mat as MeshStandardMaterial).map?.dispose(); mat.dispose(); });
         });
         renderer.dispose();
     };
+
+    // Compile the shaders now so the first animated frame does not stall.
+    renderer.compile(scene, camera);
+    render(0);
 
     return {render, resize, dispose};
 }

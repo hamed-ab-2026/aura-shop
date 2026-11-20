@@ -150,7 +150,11 @@ html.nav-open, html.nav-open body { overflow: hidden; }
 /* Loading intro with the 3D device */
 .loader { display: none; }
 .js .loader { position: fixed; inset: 0; z-index: 200; display: grid; place-items: center; background: radial-gradient(ellipse 60% 55% at 50% 42%, #1b2373 0%, #0a0c1f 55%, #05060d 100%); color: #fff;
-    animation: loader-failsafe .6s ease 10s forwards; transition: opacity .5s ease, visibility 0s .5s; }
+    transition: opacity .5s ease, visibility 0s .5s; }
+/* Fail-safe: if the script never takes over (still waiting after 12s), get out of the way */
+.js .loader.is-waiting { animation: loader-failsafe .6s ease 12s forwards; }
+.loader.is-waiting .loader-mark { animation: breathe 1.4s ease-in-out infinite; }
+@keyframes breathe { 50% { opacity: .45; } }
 .js .loader.is-out { opacity: 0; visibility: hidden; }
 @keyframes loader-failsafe { to { opacity: 0; visibility: hidden; } }
 html.is-loading, html.is-loading body { overflow: hidden; }
