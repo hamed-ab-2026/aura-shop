@@ -1,5 +1,5 @@
 /* A procedural 3D model of the Aura Vent (black cabinet with a blue filter stripe and vents, a corrugated hose and an LED
-   ring at the nozzle) and the 4-second intro animation used by the loading screen. Loaded on demand with three.js. */
+   ring at the nozzle) and the 7-second intro animation used by the loading screen. Loaded on demand with three.js. */
 
 import * as THREE from "three";
 
@@ -202,20 +202,20 @@ export function createDeviceScene(canvas: HTMLCanvasElement): DeviceScene {
     resize();
 
     const render = (t: number) => {
-        const intro = smooth(0, 1.1, t);
+        const intro = smooth(0, 1.6, t);
         stage.position.y = (1 - intro) * -0.6;
         stage.scale.setScalar(0.88 + intro * 0.12);
-        stage.rotation.y = -0.9 + t * 0.85 + Math.sin(t * 0.8) * 0.08;
+        stage.rotation.y = -0.9 + t * 0.6 + Math.sin(t * 0.8) * 0.08;
 
         // LED powers on with a short flicker.
-        const on = smooth(1.1, 1.7, t) * (t < 1.7 ? 0.55 + 0.45 * Math.sin(t * 70) : 1);
+        const on = smooth(1.8, 2.6, t) * (t < 2.6 ? 0.55 + 0.45 * Math.sin(t * 70) : 1);
         ledMat.emissiveIntensity = on * 3;
         (glow.material as THREE.SpriteMaterial).opacity = on * 0.9;
         ledLight.intensity = on * 5;
 
         // Vapour: rises around the device, then spirals into the nozzle.
-        pMat.opacity = smooth(0.6, 1.4, t) * (1 - smooth(3.5, 4, t));
-        const pull = smooth(1.6, 3.4, t);
+        pMat.opacity = smooth(0.8, 2, t) * (1 - smooth(6.1, 6.7, t));
+        const pull = smooth(2.6, 5.8, t);
         nozzle.getWorldPosition(target);
         seeds.forEach((s, i) => {
             const k = (s.h + t * 0.12 * s.s) % 1;

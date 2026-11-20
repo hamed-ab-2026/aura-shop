@@ -150,7 +150,7 @@ html.nav-open, html.nav-open body { overflow: hidden; }
 /* Loading intro with the 3D device */
 .loader { display: none; }
 .js .loader { position: fixed; inset: 0; z-index: 200; display: grid; place-items: center; background: radial-gradient(ellipse 60% 55% at 50% 42%, #1b2373 0%, #0a0c1f 55%, #05060d 100%); color: #fff;
-    animation: loader-failsafe .6s ease 7s forwards; transition: opacity .5s ease, visibility 0s .5s; }
+    animation: loader-failsafe .6s ease 10s forwards; transition: opacity .5s ease, visibility 0s .5s; }
 .js .loader.is-out { opacity: 0; visibility: hidden; }
 @keyframes loader-failsafe { to { opacity: 0; visibility: hidden; } }
 html.is-loading, html.is-loading body { overflow: hidden; }

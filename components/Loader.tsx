@@ -3,14 +3,18 @@
 import {useEffect, useRef, useState} from "react";
 
 /** How long the intro runs, in milliseconds, including the fade out. */
-const DURATION = 4000;
+const DURATION = 7000;
 const FADE = 500;
+
+/** Window event fired when the intro starts fading out; the hero starts its background clips on it. */
+export const LOADER_DONE = "aura:loader-done";
 
 /**
  * Full-screen loading intro shown on every page load: a rotating 3D model of the device whose LED ring switches on and
  * pulls in vapour, with a progress counter. The overlay is server-rendered so it covers the page from the first paint;
  * three.js loads in parallel and the model fades in as soon as it is ready. If WebGL is unavailable the overlay still
- * shows the wordmark and counter. CSS hides it without JS, and a CSS fail-safe removes it even if this script breaks.
+ * shows the wordmark and counter. While it runs, the hero buffers its background clips. CSS hides it without JS,
+ * and a CSS fail-safe removes it even if this script breaks.
  */
 export default function Loader() {
     const canvas = useRef<HTMLCanvasElement>(null);
@@ -20,6 +24,7 @@ export default function Loader() {
 
     useEffect(() => {
         const root = document.documentElement;
+        root.classList.add("is-loading"); // set by the boot script; re-added in case an effect remount cleared it
         const start = performance.now();
         let raf = 0;
         let alive = true;
@@ -46,7 +51,7 @@ export default function Loader() {
         };
         raf = requestAnimationFrame(tick);
 
-        const out = setTimeout(() => { setPhase("out"); root.classList.remove("is-loading"); }, DURATION - FADE);
+        const out = setTimeout(() => { setPhase("out"); root.classList.remove("is-loading"); dispatchEvent(new Event(LOADER_DONE)); }, DURATION - FADE);
         const done = setTimeout(() => setPhase("done"), DURATION);
         return () => {
             alive = false;

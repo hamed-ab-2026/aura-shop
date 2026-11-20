@@ -3,6 +3,7 @@
 import {useEffect, useRef, useState} from "react";
 import {asset} from "@/lib/asset";
 import {ArrowDownIcon, CloseIcon, PhoneIcon, PlayIcon} from "./Icons";
+import {LOADER_DONE} from "./Loader";
 import Vapor from "./Vapor";
 
 interface Props {
@@ -30,35 +31,42 @@ export default function VideoHero({videos, aparat, title, eyebrow, lead, poster,
     const [active, setActive] = useState(0);
     const [paused, setPaused] = useState(false);
     const [playerOpen, setPlayerOpen] = useState(false);
+    /** True while the loading intro covers the page; clips buffer meanwhile and start once it ends. */
+    const [waiting, setWaiting] = useState(true);
+    const hold = paused || waiting;
 
     useEffect(() => {
         if (matchMedia("(prefers-reduced-motion: reduce)").matches) setPaused(true);
+        // Buffer every clip while the intro plays so each one is ready when its turn comes.
+        vids.current.forEach((v) => { if (v) { v.preload = "auto"; v.load(); } });
+        if (!document.documentElement.classList.contains("is-loading")) { setWaiting(false); return; }
+        const onDone = () => setWaiting(false);
+        addEventListener(LOADER_DONE, onDone);
+        return () => removeEventListener(LOADER_DONE, onDone);
     }, []);
 
-    // Play the active clip from the start, pause the others and warm up the next one.
+    // Play the active clip from the start and pause the others.
     useEffect(() => {
         vids.current.forEach((v, i) => {
             if (!v) return;
             if (i === active) {
-                v.currentTime = 0;
-                if (!paused) v.play().catch(() => {});
+                if (v.currentTime > 0) v.currentTime = 0;
+                if (!hold) v.play().catch(() => {});
             } else v.pause();
         });
-        const next = vids.current[(active + 1) % videos.length];
-        if (next && next.preload !== "auto") { next.preload = "auto"; next.load(); }
-    }, [active, paused, videos.length]);
+    }, [active, hold]);
 
     // Pause while the hero is off-screen.
     useEffect(() => {
         const io = new IntersectionObserver(([e]) => {
             const v = vids.current[active];
             if (!v) return;
-            if (e.isIntersecting && !paused) v.play().catch(() => {});
+            if (e.isIntersecting && !hold) v.play().catch(() => {});
             else v.pause();
         });
         if (root.current) io.observe(root.current);
         return () => io.disconnect();
-    }, [active, paused]);
+    }, [active, hold]);
 
     // Scroll progress through the hero drives the shrink and fade in CSS.
     useEffect(() => {
@@ -94,7 +102,7 @@ export default function VideoHero({videos, aparat, title, eyebrow, lead, poster,
                             src={asset(v.src)}
                             muted
                             playsInline
-                            preload={i === 0 ? "auto" : "none"}
+                            preload="auto"
                             onTimeUpdate={onTime(i)}
                             onEnded={next}
                         />
