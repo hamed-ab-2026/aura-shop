@@ -3,7 +3,7 @@ import {ChatIcon, FEATURE_ICONS, PhoneIcon} from "@/components/Icons";
 import ProductDetails from "@/components/ProductDetails";
 import VideoHero from "@/components/VideoHero";
 import {FEATURED as product} from "@/data/products";
-import {STORE} from "@/data/store";
+import {HERO_VIDEOS, STORE} from "@/data/store";
 import {askAbout, telLink, waLink} from "@/lib/contact";
 
 const fa = (n: number) => n.toLocaleString("fa-IR", {minimumIntegerDigits: 2});
@@ -18,9 +18,7 @@ export default function HomePage() {
                 image: product.images.map((i) => `${STORE.siteUrl}${i.src}`), brand: {"@type": "Brand", name: "Aura"},
             }}/>
 
-            {product.aparat && (
-                <VideoHero hash={product.aparat} title={product.name} eyebrow={STORE.nameFa} lead={STORE.tagline} poster={product.images[0].src} phoneHref={telLink}/>
-            )}
+            <VideoHero videos={HERO_VIDEOS} aparat={product.aparat} title={product.name} eyebrow={STORE.nameFa} lead={STORE.tagline} poster={product.images[0].src} phoneHref={telLink}/>
 
             <section id="about" className="section">
                 <div className="wrap intro">

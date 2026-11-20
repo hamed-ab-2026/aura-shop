@@ -1,5 +1,5 @@
 import Link from "next/link";
-import {SECTIONS, STORE} from "@/data/store";
+import {DESIGNER, SECTIONS, STORE} from "@/data/store";
 import {telLink, waLink} from "@/lib/contact";
 import {ArrowUpIcon} from "./Icons";
 
@@ -27,6 +27,13 @@ export default function Footer() {
                 </div>
                 <div className="footer-bottom">
                     <span>© {new Date().getFullYear().toLocaleString("fa-IR", {useGrouping: false})} {STORE.nameFa}</span>
+                    <a className="credit" href={DESIGNER.url} target="_blank" rel="noopener" aria-label={`طراحی و توسعه: ${DESIGNER.name}، ${DESIGNER.brand} (در برگه‌ی جدید باز می‌شود)`}>
+                        <span className="credit-label">طراحی و توسعه</span>
+                        <span className="credit-logo" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round"><path d="m8 7-5 5 5 5M16 7l5 5-5 5M14 4l-4 16"/></svg>
+                        </span>
+                        <span className="credit-text"><strong>{DESIGNER.name}</strong><span dir="ltr">{DESIGNER.brand}</span></span>
+                    </a>
                     <a className="to-top" href="#top" aria-label="بازگشت به بالای صفحه"><ArrowUpIcon/></a>
                 </div>
             </div>
